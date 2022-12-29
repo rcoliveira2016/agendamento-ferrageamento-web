@@ -1,9 +1,8 @@
-<script setup lang="ts">
-import ALayoutPadrao from "@/components/layout/ALayoutPadrao.vue";
-</script>
-
 <template>
   <ALayoutPadrao>
-    <h1>Home</h1>
+    <h2>Tela inicial</h2>
   </ALayoutPadrao>
 </template>
+<script setup lang="ts">
+import ALayoutPadrao from "@/components/layout/padrao/ALayoutPadrao.vue";
+</script>

@@ -1,8 +1,8 @@
 <template>
-  <RouterView />
+  <AThemaProvider>
+    <RouterView />
+  </AThemaProvider>
 </template>
 <script lang="ts" setup>
-import { useQuasar } from "quasar";
-
-useQuasar().dark.set(true);
+import AThemaProvider from "./components/thema/thema-provider/AThemaProvider.vue";
 </script>

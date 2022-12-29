@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import { AuthService } from "@/services/common/auth-service/auth-service";
+import { AuthService } from "@/services/auth-service/auth-service";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +16,22 @@ const router = createRouter({
       meta: {
         publico: true,
       },
+    },
+    {
+      path: "/clientes-cavalos/listagem",
+      name: "clientes-cavalos-listagem",
+      component: () =>
+        import(
+          "../views/clientes-cavalos/listegem/AListagemClienteCavaloView.vue"
+        ),
+    },
+    {
+      path: "/clientes-cavalos/cadastro/:codigo?",
+      name: "clientes-cavalos-cadastros",
+      component: () =>
+        import(
+          "../views/clientes-cavalos/cadastro/ACadastroClienteCavaloView.vue"
+        ),
     },
   ],
 });

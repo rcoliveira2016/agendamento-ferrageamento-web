@@ -9,7 +9,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "firebase-emulador": "firebase emulators:start --import .\\.data_firebase --export-on-exit",
+    "firebase-emulador": "firebase emulators:start --import .\\.data_firebase --export-on-exit .\\.data_firebase",
     "deploy": "firebase deploy"
   },
   "dependencies": {

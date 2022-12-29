@@ -1,6 +1,6 @@
 import { useNotifyError } from "@/core/notifications/notifications";
 import router from "@/router";
-import { AuthService } from "@/services/common/auth-service/auth-service";
+import { AuthService } from "@/services/auth-service/auth-service";
 import { defineStore } from "pinia";
 
 export const useLoginStore = defineStore("loginStore", {
