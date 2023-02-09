@@ -22,7 +22,13 @@ class AuthServiceClass {
 
   async logar(email: string, senha: string): Promise<ILoginRetornoAuthService> {
     try {
-      await useLoginPorEmailSenha(email, senha);
+      const resposta = await useLoginPorEmailSenha(email, senha);
+      console.log(resposta);
+      if (!resposta.erro) return { sucesso: true };
+      return {
+        sucesso: false,
+        mensagem: "usuário não encontrado inválida",
+      };
     } catch (error) {
       if (error instanceof FirebaseError) {
         console.log(error.code);

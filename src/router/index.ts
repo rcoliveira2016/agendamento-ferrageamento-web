@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { AuthService } from "@/services/auth-service/auth-service";
 import {
+  NAME_ROUTE_AGENDAMENTO_CADASTRO,
   NAME_ROUTE_CLIENTE_CADASTRO,
   NAME_ROUTE_CLIENTE_LISTAGEM,
 } from "./constants";
@@ -32,6 +33,12 @@ const router = createRouter({
       name: NAME_ROUTE_CLIENTE_CADASTRO,
       component: () =>
         import("../views/clientes/cadastro/ACadastroClienteView.vue"),
+    },
+    {
+      path: "/agendamento/cadastro/:cliente/:id?",
+      name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
+      component: () =>
+        import("../views/agendamento/cadastro/ACadastroAgendamentoView.vue"),
     },
   ],
 });
