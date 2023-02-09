@@ -24,10 +24,3 @@ export const useLoginPorEmailSenha = async (
 export const useDeslogar = () => {
   supabase.auth.signOut();
 };
-
-(window as any).registrar = function () {
-  supabase.auth.signUp({
-    email: "ro@gmail.com",
-    password: "1234567",
-  });
-};
