@@ -24,7 +24,7 @@ export const useCadastroAgendamentoStore = defineStore(
       async salvar() {
         //
       },
-      async abrirTela(id?: string, idCliente?: string) {
+      async abrirTela(idCliente: undefined | string, id?: string) {
         //
       },
     },

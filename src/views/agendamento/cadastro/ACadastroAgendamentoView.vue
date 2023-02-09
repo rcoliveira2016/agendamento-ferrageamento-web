@@ -1,6 +1,6 @@
 <template>
   <ALayoutPadraoCadastro
-    titulo="Cliente"
+    titulo="Agendamento"
     @salvar="salvarValidar"
     @excluir="excluir"
     :mostrar-excluir="!heNovo"
@@ -24,7 +24,7 @@ export default defineComponent({
   beforeRouteEnter(to) {
     const id: string | undefined = to.params?.id as string;
     const idCliente: string | undefined = to.params?.id as string;
-    useCadastroAgendamentoStore().abrirTela(id, idCliente);
+    useCadastroAgendamentoStore().abrirTela(idCliente, id);
   },
   setup() {
     return {
@@ -40,9 +40,6 @@ export default defineComponent({
       if (await this.form?.validate()) {
         this.salvar();
       }
-    },
-    novoAgendamento() {
-      //
     },
   },
   components: {

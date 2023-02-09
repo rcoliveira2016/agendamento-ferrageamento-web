@@ -35,7 +35,7 @@ const router = createRouter({
         import("../views/clientes/cadastro/ACadastroClienteView.vue"),
     },
     {
-      path: "/agendamento/cadastro/:cliente/:id?",
+      path: "/agendamento/cadastro/:idCliente/:id?",
       name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
       component: () =>
         import("../views/agendamento/cadastro/ACadastroAgendamentoView.vue"),

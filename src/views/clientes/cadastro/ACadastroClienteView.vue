@@ -57,6 +57,7 @@
 import ACadastroBasicoFloatingActionButton from "@/components/cadastros/floating-action-button/ACadastroBasicoFloatingActionButton.vue";
 import AInputForm from "@/components/forms/campos/AInputForm.vue";
 import ALayoutPadraoCadastro from "@/components/layout/padrao/ALayoutPadraoCadastro.vue";
+import { NAME_ROUTE_AGENDAMENTO_CADASTRO } from "@/router/constants";
 import { useCadastroClientesStore } from "@/stores/clientes/cadastro/cadastro-clientes-store";
 import { mapActions, mapState } from "pinia";
 import type { QForm } from "quasar";
@@ -83,7 +84,14 @@ export default defineComponent({
       }
     },
     novoAgendamento() {
-      //
+      if (this.registro.id)
+        this.$router.push({
+          name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
+          params: {
+            id: 0,
+            idCliente: this.registro.id,
+          },
+        });
     },
   },
   components: {
