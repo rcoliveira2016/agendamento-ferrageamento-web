@@ -7,16 +7,26 @@
     elevated
   >
     <q-scroll-area class="fit">
+      <div class="relative-position bg-secondary">
+        <div class="q-pa-md bg-transparent">
+          <q-avatar size="70px" class="q-mb-sm">
+            <img src="@/assets/img/avatar.jpg" />
+          </q-avatar>
+          <div class="text-weight-bold text-subtitle1">Luiz</div>
+          <div class="text-subtitle2 text-caption">@luis_ferrador</div>
+        </div>
+      </div>
+      <q-separator />
       <q-list>
         <AMenuDrawerPrincipalItem
-          texto="Cliente Cavalo"
-          icon="fa fa-sharp fa-solid fa-horse"
-          @click="abrirCavalosCliente"
+          texto="Cliente"
+          icon="account_circle"
+          @click="abrirCliente"
         />
         <q-separator />
         <AMenuDrawerPrincipalItem
-          icon="fa fa-solid fa-right-from-bracket"
-          texto="Deslogar"
+          icon="transit_enterexit"
+          texto="Sair"
           @click="deslogar"
         />
       </q-list>
@@ -28,6 +38,7 @@ import { computed } from "vue";
 import AMenuDrawerPrincipalItem from "./AMenuDrawerPrincipalItem.vue";
 import { AuthService } from "@/services/auth-service/auth-service";
 import router from "@/router";
+import { NAME_ROUTE_CLIENTE_LISTAGEM } from "@/router/constants";
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -43,7 +54,6 @@ const leftDrawerOpen = computed<boolean>({
     emits("update:modelValue", value);
   },
 });
-const abrirCavalosCliente = () =>
-  router.push({ name: "clientes-cavalos-listagem" });
+const abrirCliente = () => router.push({ name: NAME_ROUTE_CLIENTE_LISTAGEM });
 const deslogar = () => AuthService.deslogar();
 </script>

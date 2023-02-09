@@ -10,5 +10,20 @@ export const registrarQuasar = (app: App<Element>) => {
   app.use(Quasar, {
     plugins: { Notify }, // import Quasar plugins and add here
     lang: quasarLang,
+    config: {
+      brand: {
+        primary: "#1976d2",
+        secondary: "#26A69A",
+        accent: "#9C27B0",
+
+        dark: "#212121",
+        "dark-page": "#303030",
+
+        positive: "#21BA45",
+        negative: "#C10015",
+        info: "#31CCEC",
+        warning: "#F2C037",
+      },
+    },
   });
 };

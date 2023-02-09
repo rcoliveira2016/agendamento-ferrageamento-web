@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { AuthService } from "@/services/auth-service/auth-service";
+import {
+  NAME_ROUTE_CLIENTE_CADASTRO,
+  NAME_ROUTE_CLIENTE_LISTAGEM,
+} from "./constants";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,23 +22,20 @@ const router = createRouter({
       },
     },
     {
-      path: "/clientes-cavalos/listagem",
-      name: "clientes-cavalos-listagem",
+      path: "/clientes/listagem",
+      name: NAME_ROUTE_CLIENTE_LISTAGEM,
       component: () =>
-        import(
-          "../views/clientes-cavalos/listegem/AListagemClienteCavaloView.vue"
-        ),
+        import("../views/clientes/listegem/AListagemClienteView.vue"),
     },
     {
-      path: "/clientes-cavalos/cadastro/:codigo?",
-      name: "clientes-cavalos-cadastros",
+      path: "/clientes/cadastro/:id?",
+      name: NAME_ROUTE_CLIENTE_CADASTRO,
       component: () =>
-        import(
-          "../views/clientes-cavalos/cadastro/ACadastroClienteCavaloView.vue"
-        ),
+        import("../views/clientes/cadastro/ACadastroClienteView.vue"),
     },
   ],
 });
+
 router.beforeEach(async (to, from, next) => {
   if (to.meta["publico"]) {
     next();

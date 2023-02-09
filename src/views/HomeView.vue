@@ -1,6 +1,9 @@
 <template>
   <ALayoutPadrao>
-    <h2>Tela inicial</h2>
+    <p class="text-h6">Agendamento</p>
+    <p class="text-body2">
+      {{ new Date().toLocaleString() }}
+    </p>
   </ALayoutPadrao>
 </template>
 <script setup lang="ts">

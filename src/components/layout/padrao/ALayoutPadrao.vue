@@ -6,7 +6,7 @@
 
         <q-toolbar-title> {{ titulo }} </q-toolbar-title>
         <q-space />
-        <q-btn v-if="mostrarAdd" flat round icon="add" @click="$emit('add')" />
+        <slot name="direita-toolbar" />
       </q-toolbar>
     </q-header>
 
@@ -29,12 +29,7 @@ export default {
       type: String,
       default: "Agendamento",
     },
-    mostrarAdd: {
-      type: Boolean,
-      default: false,
-    },
   },
-  emits: ["add"],
   setup() {
     const leftDrawerOpen = ref(false);
     return {

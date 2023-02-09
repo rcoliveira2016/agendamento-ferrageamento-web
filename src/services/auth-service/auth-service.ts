@@ -1,22 +1,22 @@
-import {
-  useDeslogar,
-  useLoginPorEmailSenha,
-  useUsuarioAtivo,
-} from "@/apis/firebase/firebase-auth";
 import type {
   IUsuarioLogadoAuthService,
   ILoginRetornoAuthService,
 } from "./types";
 import { FirebaseError } from "firebase/app";
 import router from "@/router";
+import {
+  useUsuarioAtivoSessao,
+  useLoginPorEmailSenha,
+  useDeslogar,
+} from "@/apis/supabase/auth";
 
 class AuthServiceClass {
   async usuarioLogado(): Promise<IUsuarioLogadoAuthService | undefined> {
-    const usuario = await useUsuarioAtivo();
+    const usuario = await useUsuarioAtivoSessao();
     if (!usuario) return undefined;
     return {
       email: usuario.email ?? "",
-      id: usuario.uid,
+      id: usuario.id,
     };
   }
 

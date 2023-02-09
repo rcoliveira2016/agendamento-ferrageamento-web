@@ -1,10 +1,30 @@
-// outside of a Vue file
-import { Notify } from "quasar";
+import { Notify, type QNotifyCreateOptions } from "quasar";
 
-export const useNotifyError = (mensagem: string) => {
+const useNotifyBase = (opt: QNotifyCreateOptions) => {
   Notify.create({
-    message: mensagem,
     position: "top-left",
     type: "negative",
+    progress: true,
+    actions: [
+      {
+        icon: "close",
+        color: "white",
+      },
+    ],
+    ...opt,
+  });
+};
+
+export const useNotifyError = (mensagem: string) => {
+  useNotifyBase({
+    message: mensagem,
+    type: "negative",
+  });
+};
+
+export const useNotifySuccess = (mensagem: string) => {
+  useNotifyBase({
+    message: mensagem,
+    type: "positive",
   });
 };

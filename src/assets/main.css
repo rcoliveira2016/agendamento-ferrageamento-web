@@ -1,0 +1,16 @@
+:root{
+  --tamanho-maximo-container: 800px
+}
+.flex-auto{
+  flex: auto;
+}
+.tamanho-maximo-container-pagina{
+  max-width: var(--tamanho-maximo-container);
+}
+.margin-auto{
+  margin:auto
+}
+
+.q-toolbar__title{
+  font-size: 18px !important;
+}

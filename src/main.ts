@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import "@/apis/firebase/firebase-bootstrap";
+import "@/apis/supabase/supabase-bootstrap";
 import App from "./App.vue";
 import router from "./router";
 import "./assets/main.css";

@@ -6,6 +6,15 @@
 
         <q-toolbar-title> {{ titulo }} </q-toolbar-title>
         <q-space />
+        <slot name="botoes-direita" />
+        <q-btn
+          v-if="mostrarExcluir"
+          dense
+          flat
+          round
+          icon="delete"
+          @click="excluir"
+        />
       </q-toolbar>
     </q-header>
 
@@ -28,10 +37,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    mostrarExcluir: {
+      type: Boolean,
+      default: false,
+    },
   },
+  emits: ["excluir"],
   methods: {
     voltar() {
       this.$router.back();
+    },
+    excluir() {
+      this.$emit("excluir");
     },
   },
   components: { AMainPageContainer },
