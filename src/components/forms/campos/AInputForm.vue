@@ -6,6 +6,7 @@
     :lazy-rules="!!regras?.length"
     :type="typeInput"
     :debounce="debounce"
+    :disable="disable"
   >
     <template v-if="!!iconLeft" v-slot:prepend>
       <q-icon :name="iconLeft" />
@@ -29,11 +30,15 @@ export default defineComponent({
     label: String,
     isRequired: Boolean,
     isNumber: Boolean,
+    isTextarea: Boolean,
     debounce: Number,
+    disable: Boolean,
   },
   computed: {
-    typeInput(): "text" | "number" | undefined {
-      return this.isNumber ? "number" : undefined;
+    typeInput(): "text" | "number" | "textarea" | undefined {
+      if (this.isNumber) return "number";
+      if (this.isTextarea) return "textarea";
+      return undefined;
     },
     regras(): ValidationRule[] | undefined {
       if (this.isRequired) {
