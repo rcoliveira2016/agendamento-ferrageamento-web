@@ -17,9 +17,14 @@ export const useListagemClientesStore = defineStore("listagemClientesStore", {
     };
   },
   actions: {
+    async inicar() {
+      if (this.dados.length || this.estadoListagem.carregouTodos) return;
+      await this.buscarSetarDados();
+    },
     async recarregarDadosTela() {
       this.estadoListagem = { ...estadoListagemEmpty };
       this.dados = [];
+      await this.buscarSetarDados();
     },
     async pesquisaTexto() {
       this.estadoListagem.carregouTodos = false;

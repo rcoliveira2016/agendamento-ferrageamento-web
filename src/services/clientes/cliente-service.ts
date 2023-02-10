@@ -9,19 +9,18 @@ import {
   type RetornoPadraoService,
   useRetornoPadraoServiceErro,
 } from "@/core/service/types/retorno-padrao-service";
-import {
-  useInsert,
-  useUpdate,
-  useUpdateOrInsert,
-} from "@/apis/supabase/store/write/write-store";
+import { useUpdateOrInsert } from "@/apis/supabase/store/write/write-store";
 import { useGet } from "@/apis/supabase/store/read/selects";
 import { useDelete } from "@/apis/supabase/store/write/delete-store";
-import { loadingRequestService } from "@/core/service/loading-request";
+import {
+  loadingBarRequestService,
+  loadingRequestService,
+} from "@/core/service/loading-request";
 
 class ClienteServiceClass {
   private readonly nomaTabela = "cliente";
 
-  @loadingRequestService
+  @loadingBarRequestService()
   public async listagem(parametros: IParametroListagemCliente) {
     const data = await useQueryPaginada<IListagemClienteViewModel>(
       this.nomaTabela,
@@ -35,7 +34,7 @@ class ClienteServiceClass {
       : useRetornoPadraoServiceSucesso(data);
   }
 
-  @loadingRequestService
+  @loadingRequestService(300)
   public async salvar(
     dados: ICadastroClienteViewModel
   ): Promise<RetornoPadraoService<ICadastroClienteViewModel>> {
@@ -48,7 +47,7 @@ class ClienteServiceClass {
       : useRetornoPadraoServiceSucesso(data, "salvo com sucesso");
   }
 
-  @loadingRequestService
+  @loadingBarRequestService(300)
   public async buscarCliente(
     id: number
   ): Promise<RetornoPadraoService<ICadastroClienteViewModel>> {
@@ -62,7 +61,7 @@ class ClienteServiceClass {
       : useRetornoPadraoServiceSucesso(dado);
   }
 
-  @loadingRequestService
+  @loadingRequestService(400)
   public async excluir(
     dados: ICadastroClienteViewModel
   ): Promise<RetornoPadraoService<ICadastroClienteViewModel>> {

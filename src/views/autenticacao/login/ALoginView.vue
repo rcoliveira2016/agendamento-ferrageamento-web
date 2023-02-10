@@ -3,10 +3,10 @@
     <q-page-container class="">
       <div class="window-height flex justify-center items-center">
         <q-card
-          style="max-height: 280px"
           square
           bordered
-          class="q-pa-lg shadow-1"
+          class="q-pa-lg q-mx-sm shadow-1"
+          style="width: 100%; max-width: 400px"
         >
           <q-card-section>
             <q-form class="q-gutter-md">

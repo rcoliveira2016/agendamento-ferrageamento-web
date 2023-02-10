@@ -38,10 +38,14 @@ export default defineComponent({
   computed: {
     ...mapState(useListagemClientesStore, ["dados", "estadoListagem"]),
   },
+  created() {
+    this.inicar();
+  },
   methods: {
     ...mapActions(useListagemClientesStore, [
       "carregarMaisDados",
       "recarregarDadosTela",
+      "inicar",
     ]),
     novo() {
       this.$router.push({ name: NAME_ROUTE_CLIENTE_CADASTRO });
