@@ -7,6 +7,38 @@
   >
     <div class="fit">
       <q-form ref="form" class="tamanho-maximo-container-pagina margin-auto">
+        <div class="row">
+          <div class="col">
+            <AInputForm
+              v-model="registro.nomeCliente"
+              label="Nome cliente"
+              icon-left="account_circle"
+              disable
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <AInputForm
+              v-model="registro.localCliente"
+              label="local ferrageamento"
+              icon-left="location_on"
+              disable
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <AInputForm
+              v-model="registro.observacoes"
+              label="Observacoes"
+              icon-left="article"
+              is-textarea
+              is-required
+              rows="3"
+            />
+          </div>
+        </div>
       </q-form>
     </div>
     <ACadastroBasicoFloatingActionButton @salvar="salvarValidar" />
@@ -14,6 +46,7 @@
 </template>
 <script lang="ts">
 import ACadastroBasicoFloatingActionButton from "@/components/cadastros/floating-action-button/ACadastroBasicoFloatingActionButton.vue";
+import AInputForm from "@/components/forms/campos/AInputForm.vue";
 import ALayoutPadraoCadastro from "@/components/layout/padrao/ALayoutPadraoCadastro.vue";
 import { useCadastroAgendamentoStore } from "@/stores/agendamento/cadastro/cadastro-agendamento-store";
 import { mapActions, mapState } from "pinia";
@@ -23,7 +56,7 @@ export default defineComponent({
   name: "ACadastroAgendamentoView",
   beforeRouteEnter(to) {
     const id: string | undefined = to.params?.id as string;
-    const idCliente: string | undefined = to.params?.id as string;
+    const idCliente: string | undefined = to.params?.idCliente as string;
     useCadastroAgendamentoStore().abrirTela(idCliente, id);
   },
   setup() {
@@ -46,6 +79,7 @@ export default defineComponent({
   components: {
     ACadastroBasicoFloatingActionButton,
     ALayoutPadraoCadastro,
+    AInputForm,
   },
 });
 </script>

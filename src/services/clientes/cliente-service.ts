@@ -16,9 +16,10 @@ import {
   loadingBarRequestService,
   loadingRequestService,
 } from "@/core/service/loading-request";
+import { TABLE_CLIENTE } from "@/apis/supabase/store/constants/table";
 
 class ClienteServiceClass {
-  private readonly nomaTabela = "cliente";
+  private readonly nomaTabela = TABLE_CLIENTE;
 
   @loadingBarRequestService()
   public async listagem(parametros: IParametroListagemCliente) {
