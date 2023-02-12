@@ -50,7 +50,7 @@ class AgendamentoServiceClass {
       await useGetCustom<ICadastroAgendamentoApiViewModel>(
         this.nomaTabela,
         idCliete,
-        `*\n${useMontarSelectSubconsulta(TABLE_CLIENTE, [
+        `*,\n${useMontarSelectSubconsulta(TABLE_CLIENTE, [
           TABLE_CLIENTE_COLUNA.nome,
           TABLE_CLIENTE_COLUNA.local,
         ])}`
@@ -58,8 +58,8 @@ class AgendamentoServiceClass {
 
     const dadoMapeado: ICadastroAgendamentoViewModel = {
       ...dado,
-      nomeCliente: dado.cliente[0].nome,
-      localCliente: dado.cliente[0].local,
+      nomeCliente: dado.cliente.nome,
+      localCliente: dado.cliente.local,
     };
 
     return erro

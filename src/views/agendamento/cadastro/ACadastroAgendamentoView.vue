@@ -13,6 +13,7 @@
               v-model="registro.nomeCliente"
               label="Nome cliente"
               icon-left="account_circle"
+              is-required
               disable
             />
           </div>
@@ -24,6 +25,28 @@
               label="local ferrageamento"
               icon-left="location_on"
               disable
+              is-required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <AInputDataPicker
+              v-model="registro.dataAgendamento"
+              label="Data agendamento"
+              icon-left="calendar_month"
+              is-required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <AInputForm
+              v-model="registro.quantidadeCavalo"
+              label="Quantidade"
+              icon-left="fa fa-light fa-horse-head"
+              is-number
+              is-required
             />
           </div>
         </div>
@@ -47,6 +70,7 @@
 <script lang="ts">
 import ACadastroBasicoFloatingActionButton from "@/components/cadastros/floating-action-button/ACadastroBasicoFloatingActionButton.vue";
 import AInputForm from "@/components/forms/campos/AInputForm.vue";
+import AInputDataPicker from "@/components/forms/campos/date/AInputDataPicker.vue";
 import ALayoutPadraoCadastro from "@/components/layout/padrao/ALayoutPadraoCadastro.vue";
 import { useCadastroAgendamentoStore } from "@/stores/agendamento/cadastro/cadastro-agendamento-store";
 import { mapActions, mapState } from "pinia";
@@ -80,6 +104,7 @@ export default defineComponent({
     ACadastroBasicoFloatingActionButton,
     ALayoutPadraoCadastro,
     AInputForm,
+    AInputDataPicker,
   },
 });
 </script>

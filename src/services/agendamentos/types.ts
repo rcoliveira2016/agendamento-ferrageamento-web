@@ -22,12 +22,12 @@ export interface ICadastroAgendamentoApiViewModel {
   [TABLE_CLIENTE]: {
     [TABLE_CLIENTE_COLUNA.nome]: string;
     [TABLE_CLIENTE_COLUNA.local]: string;
-  }[];
+  };
 }
 
 export interface ICadastroAgendamentoSalvarViewModel {
   id: number;
-  idCliente: string;
+  idCliente: number;
   observacoes: string;
   dataAgendamento: Date;
   quantidadeCavalo: number;
