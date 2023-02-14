@@ -63,6 +63,8 @@ export const useCadastroAgendamentoStore = defineStore(
           idCliente: idCliente,
           nomeCliente: response.data.nome,
           localCliente: response.data.local,
+          dataAgendamento:
+            response.data.dataAgendamento ?? registroPadrao.dataAgendamento,
         };
 
         const dataQuery = router.currentRoute.value.query["dataAgendamento"];

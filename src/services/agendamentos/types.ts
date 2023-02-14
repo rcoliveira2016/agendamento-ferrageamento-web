@@ -36,6 +36,7 @@ export interface ICadastroAgendamentoSalvarViewModel {
 export interface IBuscaClienteViewModel {
   [TABLE_CLIENTE_COLUNA.nome]: string;
   [TABLE_CLIENTE_COLUNA.local]: string;
+  dataAgendamento?: Date;
 }
 
 export interface IListagemAgendamentoParametros {

@@ -49,3 +49,19 @@ ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION agendamentos_listagem TO authenticated;
 GRANT EXECUTE ON FUNCTION agendamentos_listagem TO service_role;
 
+drop view if exists clientes_agendamento;
+create
+or replace VIEW public.clientes_agendamento AS (
+  select
+    cliente.id,
+    cliente.nome,
+    cliente.local,
+    max(agendamento."dataAgendamento"+cliente.frequencia) as "dataAgendamento"
+  from
+    cliente
+    left join agendamento on agendamento."idCliente" = cliente.id
+  group by cliente.id,
+    cliente.nome,
+    cliente.local
+  order by id
+);

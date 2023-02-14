@@ -21,14 +21,17 @@ import {
   TABLE_AGENDAMENTO,
   TABLE_CLIENTE,
   TABLE_CLIENTE_COLUNA,
+  VIEW_CLIENTE_AGENADAMENTO,
+  VIEW_CLIENTE_AGENADAMENTO_COLUNA,
 } from "@/apis/supabase/store/constants/table";
 import {
   useGetCustom,
   useMontarSelectSubconsulta,
 } from "@/apis/supabase/store/read/selects-custom";
-import { supabase } from "@/apis/supabase/supabase-bootstrap";
 import { useFunctionReadSelect } from "@/apis/supabase/store/read/function-read";
 import { date } from "quasar";
+import { FORMAT_DATE_STRING } from "@/apis/supabase/store/constants";
+import { useConvertDateSupabase } from "@/apis/supabase/store/ultis/convert-date";
 
 class AgendamentoServiceClass {
   private readonly nomaTabela = TABLE_AGENDAMENTO;
@@ -67,7 +70,7 @@ class AgendamentoServiceClass {
       localCliente: dado.cliente.local,
       dataAgendamento: date.extractDate(
         dado.dataAgendamento as any as string,
-        "YYYY-MM-DD"
+        FORMAT_DATE_STRING
       ),
     };
 
@@ -81,14 +84,18 @@ class AgendamentoServiceClass {
     idCliete: number
   ): Promise<RetornoPadraoService<IBuscaClienteViewModel>> {
     const { dado, erro, mensagem } = await useGetCustom<IBuscaClienteViewModel>(
-      TABLE_CLIENTE,
+      VIEW_CLIENTE_AGENADAMENTO,
       idCliete,
-      `${TABLE_CLIENTE_COLUNA.nome},${TABLE_CLIENTE_COLUNA.local}`
+      `${VIEW_CLIENTE_AGENADAMENTO_COLUNA.nome},${VIEW_CLIENTE_AGENADAMENTO_COLUNA.local},${VIEW_CLIENTE_AGENADAMENTO_COLUNA.dataAgendamento}`
     );
 
+    const dadosTrado = {
+      ...dado,
+      dataAgendamento: useConvertDateSupabase(dado.dataAgendamento as any),
+    };
     return erro
       ? useRetornoPadraoServiceErro(dado, mensagem)
-      : useRetornoPadraoServiceSucesso(dado);
+      : useRetornoPadraoServiceSucesso(dadosTrado);
   }
 
   @loadingRequestService(400)
@@ -118,7 +125,8 @@ class AgendamentoServiceClass {
             marcado: !!x.marcado,
             id: x.id,
             nomeCliente: x.nomeCliente,
-            dataAgendamento: date.extractDate(x.dataAgendamento, "YYYY-MM-DD"),
+            dataAgendamento:
+              useConvertDateSupabase(x.dataAgendamento) ?? new Date(),
             quantidade: x.quantidadeCavalo,
             idCliente: x.idCliente,
           };
