@@ -47,6 +47,14 @@
         dense
         flat
         round
+        icon="analytics"
+        @click="consultaUltimosAgendamento"
+      />
+      <q-btn
+        v-if="!heNovo"
+        dense
+        flat
+        round
         icon="event_note"
         @click="novoAgendamento"
       />
@@ -57,7 +65,10 @@
 import ACadastroBasicoFloatingActionButton from "@/components/cadastros/floating-action-button/ACadastroBasicoFloatingActionButton.vue";
 import AInputForm from "@/components/forms/campos/AInputForm.vue";
 import ALayoutPadraoCadastro from "@/components/layout/padrao/ALayoutPadraoCadastro.vue";
-import { NAME_ROUTE_AGENDAMENTO_CADASTRO } from "@/router/constants";
+import {
+  NAME_ROUTE_AGENDAMENTO_CADASTRO,
+  NAME_ROUTE_ULTIMOS_AGENDAMENTO,
+} from "@/router/constants";
 import { useCadastroClientesStore } from "@/stores/clientes/cadastro/cadastro-clientes-store";
 import { mapActions, mapState } from "pinia";
 import type { QForm } from "quasar";
@@ -92,6 +103,15 @@ export default defineComponent({
           },
           query: {
             idCliente: this.registro.id,
+          },
+        });
+    },
+    consultaUltimosAgendamento() {
+      if (this.registro.id)
+        this.$router.push({
+          name: NAME_ROUTE_ULTIMOS_AGENDAMENTO,
+          params: {
+            id: this.registro.id,
           },
         });
     },

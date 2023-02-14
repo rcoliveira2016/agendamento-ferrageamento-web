@@ -28,15 +28,19 @@ export const useGetCustom = async <T>(
   };
 };
 
-export const usSelectCustom = async <T>(
+export const useSelectCustom = async <T>(
   tabela: string,
   select: string,
   option?: {
     orderBy?: { column: string; ascending?: boolean };
     range?: { from: number; to: number };
+    eq: { column: string; value: any };
   }
 ): Promise<IRetornoGet<T[]>> => {
   const query = supabase.from(tabela).select(select);
+  if (option?.eq) {
+    query.eq(option?.eq.column, option?.eq.value);
+  }
 
   if (option?.orderBy?.column) {
     query.order(option.orderBy.column, { ascending: option.orderBy.ascending });

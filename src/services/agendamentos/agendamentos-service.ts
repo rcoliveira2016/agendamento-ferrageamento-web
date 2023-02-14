@@ -14,10 +14,12 @@ import type {
   ICadastroAgendamentoApiViewModel,
   ICadastroAgendamentoSalvarViewModel,
   ICadastroAgendamentoViewModel,
+  IClienteUltimosAgendamentoViewModel,
   IListagemAgendamentoParametros,
   IListagemAgendamentoViewModel,
 } from "./types";
 import {
+  TABLE_AGENADAMENTO_COLUNA,
   TABLE_AGENDAMENTO,
   TABLE_CLIENTE,
   TABLE_CLIENTE_COLUNA,
@@ -27,6 +29,7 @@ import {
 import {
   useGetCustom,
   useMontarSelectSubconsulta,
+  useSelectCustom,
 } from "@/apis/supabase/store/read/selects-custom";
 import { useFunctionReadSelect } from "@/apis/supabase/store/read/function-read";
 import { date } from "quasar";
@@ -135,6 +138,33 @@ class AgendamentoServiceClass {
     return erro
       ? useRetornoPadraoServiceErro(dado, mensagem)
       : useRetornoPadraoServiceSucesso(dado);
+  }
+
+  @loadingRequestService(400)
+  public async buscarUltimosAgendamentos(
+    id: number
+  ): Promise<RetornoPadraoService<IClienteUltimosAgendamentoViewModel[]>> {
+    const { erro, mensagem, dado } =
+      await useSelectCustom<IClienteUltimosAgendamentoViewModel>(
+        this.nomaTabela,
+        `${TABLE_AGENADAMENTO_COLUNA.IdCliente},${TABLE_AGENADAMENTO_COLUNA.dataAgendamento}`,
+        {
+          eq: { column: TABLE_AGENADAMENTO_COLUNA.IdCliente, value: id },
+          orderBy: {
+            column: TABLE_AGENADAMENTO_COLUNA.dataAgendamento,
+            ascending: false,
+          },
+          range: { from: 0, to: 10 },
+        }
+      );
+    const dados = dado.map((x) => ({
+      ...x,
+      data: useConvertDateSupabase(x.data as any)!,
+    }));
+
+    return erro
+      ? useRetornoPadraoServiceErro(dados, mensagem)
+      : useRetornoPadraoServiceSucesso(dados);
   }
 }
 

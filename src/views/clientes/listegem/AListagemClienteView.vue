@@ -9,6 +9,11 @@
         @load="carregarMaisDados"
       >
         <q-list separator>
+          <q-item v-if="!dados.length">
+            <q-item-section avatar>
+              <strong>Sem registros</strong>
+            </q-item-section>
+          </q-item>
           <AListagemClienteItem :dados="dados" />
         </q-list>
 
