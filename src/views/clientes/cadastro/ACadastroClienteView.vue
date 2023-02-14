@@ -88,7 +88,9 @@ export default defineComponent({
         this.$router.push({
           name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
           params: {
-            id: 0,
+            id: undefined,
+          },
+          query: {
             idCliente: this.registro.id,
           },
         });

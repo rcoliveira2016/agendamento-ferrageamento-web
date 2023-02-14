@@ -14,7 +14,7 @@ export const useQueryPaginada = async <T>(
   let query = supabase.from(tabela).select("*", { count: "exact" });
 
   if (filtros && nameFilter) {
-    query = query.like(nameFilter, filtros);
+    query = query.ilike(nameFilter, `%${filtros}%`);
   }
 
   const { data, count, error } = await query.range(iniciar, parar);

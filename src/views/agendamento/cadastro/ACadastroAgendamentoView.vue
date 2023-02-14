@@ -72,6 +72,7 @@ import ACadastroBasicoFloatingActionButton from "@/components/cadastros/floating
 import AInputForm from "@/components/forms/campos/AInputForm.vue";
 import AInputDataPicker from "@/components/forms/campos/date/AInputDataPicker.vue";
 import ALayoutPadraoCadastro from "@/components/layout/padrao/ALayoutPadraoCadastro.vue";
+import { NAME_ROUTE_AGENDAMENTO_CADASTRO } from "@/router/constants";
 import { useCadastroAgendamentoStore } from "@/stores/agendamento/cadastro/cadastro-agendamento-store";
 import { mapActions, mapState } from "pinia";
 import type { QForm } from "quasar";
@@ -80,12 +81,11 @@ export default defineComponent({
   name: "ACadastroAgendamentoView",
   beforeRouteEnter(to) {
     const id: string | undefined = to.params?.id as string;
-    const idCliente: string | undefined = to.params?.idCliente as string;
+    const idCliente: string | undefined = to.query?.idCliente as string;
     useCadastroAgendamentoStore().abrirTela(idCliente, id);
   },
   setup() {
     return {
-      //
       form: ref<QForm>(),
     };
   },
@@ -96,7 +96,11 @@ export default defineComponent({
     ...mapActions(useCadastroAgendamentoStore, ["salvar", "excluir"]),
     async salvarValidar() {
       if (await this.form?.validate()) {
-        this.salvar();
+        await this.salvar();
+        this.$router.replace({
+          name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
+          params: { id: this.registro.id },
+        });
       }
     },
   },

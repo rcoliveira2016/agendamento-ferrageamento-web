@@ -3,6 +3,7 @@ import type { ICadastroAgendamentoStoreState } from "./type";
 import { useValidarRetornoPadraoService } from "@/core/service/validar-retorno-padrao-service";
 import { AgendamentoService } from "@/services/agendamentos/agendamentos-service";
 import router from "@/router";
+
 const estadoCadastroEmpty = () => ({
   heNovo: true,
   registro: {
@@ -11,7 +12,7 @@ const estadoCadastroEmpty = () => ({
     idCliente: 0,
     nomeCliente: "",
     observacoes: "",
-    quantidadeCavalo: 0,
+    quantidadeCavalo: 1,
     localCliente: "",
   } as ICadastroAgendamentoStoreState,
 });
@@ -68,9 +69,8 @@ export const useCadastroAgendamentoStore = defineStore(
         };
 
         const dataQuery = router.currentRoute.value.query["dataAgendamento"];
-        if (typeof dataQuery === "string") {
+        if (typeof dataQuery === "string")
           this.registro.dataAgendamento = new Date(dataQuery);
-        }
       },
       async setarRegistroExistente(id: number) {
         const response = await AgendamentoService.buscarAgendametoCliente(id);
