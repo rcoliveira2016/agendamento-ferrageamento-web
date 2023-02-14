@@ -38,7 +38,6 @@ export const useListagemAgendamentoStore = defineStore(
         });
 
         if (!useValidarRetornoPadraoService(response)) return [];
-        console.log(response.data);
         this.registros = response.data;
       },
     },

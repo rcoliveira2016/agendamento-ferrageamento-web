@@ -35,7 +35,7 @@ export default defineComponent({
   data() {
     return {
       showPopUp: false,
-      dataAtual: "",
+      dataAtual: date.formatDate(new Date(), DATE_FORMAT_PT_BR),
     };
   },
   methods: {
@@ -47,10 +47,9 @@ export default defineComponent({
       this.showPopUp = true;
     },
     showFechar() {
-      const dataSelecionada = date.extractDate(
-        this.dataAtual,
-        DATE_FORMAT_PT_BR
-      );
+      const dataSelecionada = this.dataAtual
+        ? date.extractDate(this.dataAtual, DATE_FORMAT_PT_BR)
+        : new Date();
       this.setarDatasSemana(dataSelecionada);
       this.buscarRegistro();
     },

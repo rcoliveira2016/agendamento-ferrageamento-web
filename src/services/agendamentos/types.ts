@@ -44,7 +44,9 @@ export interface IListagemAgendamentoParametros {
 }
 
 export interface IListagemAgendamentoViewModel {
+  marcado: boolean;
   id: number;
+  idCliente: number;
   nomeCliente: string;
   dataAgendamento: Date;
   quantidade: number;

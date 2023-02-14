@@ -8,7 +8,6 @@
 </template>
 <script lang="ts">
 import ALayoutPadrao from "@/components/layout/padrao/ALayoutPadrao.vue";
-import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import AListagemAgendamentoRegistrosView from "./AListagemAgendamentoRegistrosView.vue";
 import AListagemAgendamentoFiltroView from "./AListagemAgendamentoFiltroView.vue";

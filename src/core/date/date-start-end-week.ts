@@ -1,9 +1,8 @@
 export const startEndDateWeek = (data: Date) => {
-  const curr = data; // get current date
-  const first = curr.getDate() - curr.getDay();
-  const last = first + 6;
+  const curr = data;
+
   return {
-    start: new Date(curr.setDate(first)),
-    end: new Date(curr.setDate(last)),
+    start: new Date(curr.setDate(curr.getDate() - curr.getDay())),
+    end: new Date(curr.setDate(curr.getDate() - curr.getDay() + 6)),
   };
 };

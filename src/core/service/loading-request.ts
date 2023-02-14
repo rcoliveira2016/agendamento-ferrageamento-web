@@ -1,4 +1,7 @@
 import { Loading, LoadingBar, QSpinnerGears } from "quasar";
+LoadingBar.setDefaults({
+  size: "0.3rem",
+});
 
 export const useLoadingRequestService = <T = undefined>(
   action: () => T,

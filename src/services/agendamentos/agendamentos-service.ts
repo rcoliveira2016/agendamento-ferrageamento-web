@@ -65,6 +65,10 @@ class AgendamentoServiceClass {
       ...dado,
       nomeCliente: dado.cliente.nome,
       localCliente: dado.cliente.local,
+      dataAgendamento: date.extractDate(
+        dado.dataAgendamento as any as string,
+        "YYYY-MM-DD"
+      ),
     };
 
     return erro
@@ -98,7 +102,7 @@ class AgendamentoServiceClass {
       : useRetornoPadraoServiceSucesso(dados);
   }
 
-  @loadingRequestService()
+  @loadingBarRequestService(300)
   public async listagem(
     parametros: IListagemAgendamentoParametros
   ): Promise<RetornoPadraoService<IListagemAgendamentoViewModel[]>> {
@@ -111,10 +115,12 @@ class AgendamentoServiceClass {
         },
         (x) => {
           return {
+            marcado: !!x.marcado,
             id: x.id,
             nomeCliente: x.nomeCliente,
             dataAgendamento: date.extractDate(x.dataAgendamento, "YYYY-MM-DD"),
-            quantidade: x.quantidadeCavalo as number,
+            quantidade: x.quantidadeCavalo,
+            idCliente: x.idCliente,
           };
         }
       );
