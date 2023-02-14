@@ -5,6 +5,7 @@ import {
   NAME_ROUTE_CLIENTE_CADASTRO,
   NAME_ROUTE_CLIENTE_LISTAGEM,
   NAME_ROUTE_AGENDAMENTO_LISTAGEM,
+  NAME_ROUTE_ULTIMOS_AGENDAMENTO,
 } from "./constants";
 
 const router = createRouter({
@@ -36,7 +37,7 @@ const router = createRouter({
         import("../views/clientes/cadastro/ACadastroClienteView.vue"),
     },
     {
-      path: "/agendamento/cadastro/:idCliente/:id?",
+      path: "/agendamento/cadastro/:id?",
       name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
       component: () =>
         import("../views/agendamento/cadastro/ACadastroAgendamentoView.vue"),
@@ -46,6 +47,12 @@ const router = createRouter({
       name: NAME_ROUTE_AGENDAMENTO_LISTAGEM,
       component: () =>
         import("../views/agendamento/listegem/AListagemAgendamentoView.vue"),
+    },
+    {
+      path: "/clientes/consultas/ultimos/:id",
+      name: NAME_ROUTE_ULTIMOS_AGENDAMENTO,
+      component: () =>
+        import("../views/consultas/ultimos/AUltiomosAgendamentoView.vue"),
     },
   ],
 });

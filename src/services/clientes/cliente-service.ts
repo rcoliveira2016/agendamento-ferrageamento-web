@@ -16,7 +16,16 @@ import {
   loadingBarRequestService,
   loadingRequestService,
 } from "@/core/service/loading-request";
-import { TABLE_CLIENTE } from "@/apis/supabase/store/constants/table";
+import {
+  TABLE_AGENDAMENTO,
+  TABLE_CLIENTE,
+  TABLE_CLIENTE_COLUNA,
+} from "@/apis/supabase/store/constants/table";
+import {
+  useMontarSelectSubconsulta,
+  useSelectCustom,
+} from "@/apis/supabase/store/read/selects-custom";
+import { useConvertDateSupabase } from "@/apis/supabase/store/ultis/convert-date";
 
 class ClienteServiceClass {
   private readonly nomaTabela = TABLE_CLIENTE;

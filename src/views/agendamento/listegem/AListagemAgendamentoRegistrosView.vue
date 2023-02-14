@@ -42,10 +42,10 @@ export default defineComponent({
       this.$router.push({
         name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
         params: {
-          id: item.id,
-          idCliente: item.idCliente,
+          id: item.id == 0 ? undefined : item.id,
         },
         query: {
+          idCliente: item.idCliente,
           dataAgendamento: !item.id
             ? item.dataAgendamento.toISOString()
             : undefined,
