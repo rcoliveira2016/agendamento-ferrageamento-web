@@ -28,7 +28,7 @@ export const useLoadingBarRequestService = <T = undefined>(
   return result;
 };
 
-export function loadingRequestService(addTime = 0) {
+export function loadingRequestService(addTime?: number) {
   return function loadingRequestServic(
     target: any,
     propertyKey: string,

@@ -4,6 +4,7 @@
     v-for="(item, index) in dados"
     clickable
     @click="abrirCliente(item)"
+    v-touch-hold.mouse="() => abrirAgendamento(item)"
   >
     <q-item-section avatar>
       <q-icon color="primary" name="fa fa-solid fa-user-large" />
@@ -15,7 +16,10 @@
   </q-item>
 </template>
 <script lang="ts">
-import { NAME_ROUTE_CLIENTE_CADASTRO } from "@/router/constants";
+import {
+  NAME_ROUTE_AGENDAMENTO_CADASTRO,
+  NAME_ROUTE_CLIENTE_CADASTRO,
+} from "@/router/constants";
 import type { IListagemClienteStoreState } from "@/stores/clientes/listagem/types";
 import { defineComponent, type PropType } from "vue";
 export default defineComponent({
@@ -25,11 +29,19 @@ export default defineComponent({
   },
   methods: {
     abrirCliente(item: IListagemClienteStoreState) {
-      console.log(item);
       this.$router.push({
         name: NAME_ROUTE_CLIENTE_CADASTRO,
         params: {
           id: item.id,
+        },
+      });
+    },
+    abrirAgendamento(item: IListagemClienteStoreState) {
+      console.log(item);
+      this.$router.push({
+        name: NAME_ROUTE_AGENDAMENTO_CADASTRO,
+        params: {
+          idCliente: item.id,
         },
       });
     },

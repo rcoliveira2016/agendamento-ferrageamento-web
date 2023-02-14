@@ -14,6 +14,8 @@ import type {
   ICadastroAgendamentoApiViewModel,
   ICadastroAgendamentoSalvarViewModel,
   ICadastroAgendamentoViewModel,
+  IListagemAgendamentoParametros,
+  IListagemAgendamentoViewModel,
 } from "./types";
 import {
   TABLE_AGENDAMENTO,
@@ -24,6 +26,9 @@ import {
   useGetCustom,
   useMontarSelectSubconsulta,
 } from "@/apis/supabase/store/read/selects-custom";
+import { supabase } from "@/apis/supabase/supabase-bootstrap";
+import { useFunctionReadSelect } from "@/apis/supabase/store/read/function-read";
+import { date } from "quasar";
 
 class AgendamentoServiceClass {
   private readonly nomaTabela = TABLE_AGENDAMENTO;
@@ -91,6 +96,31 @@ class AgendamentoServiceClass {
     return erro
       ? useRetornoPadraoServiceErro(dados, mensagem)
       : useRetornoPadraoServiceSucesso(dados);
+  }
+
+  @loadingRequestService()
+  public async listagem(
+    parametros: IListagemAgendamentoParametros
+  ): Promise<RetornoPadraoService<IListagemAgendamentoViewModel[]>> {
+    const { dado, erro, mensagem } =
+      await useFunctionReadSelect<IListagemAgendamentoViewModel>(
+        "agendamentos_listagem",
+        {
+          inicio: parametros.dataInicioSemana,
+          final: parametros.dataFinalSemana,
+        },
+        (x) => {
+          return {
+            id: x.id,
+            nomeCliente: x.nomeCliente,
+            dataAgendamento: date.extractDate(x.dataAgendamento, "YYYY-MM-DD"),
+            quantidade: x.quantidadeCavalo as number,
+          };
+        }
+      );
+    return erro
+      ? useRetornoPadraoServiceErro(dado, mensagem)
+      : useRetornoPadraoServiceSucesso(dado);
   }
 }
 

@@ -23,6 +23,11 @@
           icon="account_circle"
           @click="abrirCliente"
         />
+        <AMenuDrawerPrincipalItem
+          texto="Agendamento"
+          icon="fa fa-light fa-horse-head"
+          @click="abrirAgendamento"
+        />
         <q-separator />
         <AMenuDrawerPrincipalItem
           icon="transit_enterexit"
@@ -38,7 +43,10 @@ import { computed } from "vue";
 import AMenuDrawerPrincipalItem from "./AMenuDrawerPrincipalItem.vue";
 import { AuthService } from "@/services/auth-service/auth-service";
 import router from "@/router";
-import { NAME_ROUTE_CLIENTE_LISTAGEM } from "@/router/constants";
+import {
+  NAME_ROUTE_AGENDAMENTO_LISTAGEM,
+  NAME_ROUTE_CLIENTE_LISTAGEM,
+} from "@/router/constants";
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -55,5 +63,7 @@ const leftDrawerOpen = computed<boolean>({
   },
 });
 const abrirCliente = () => router.push({ name: NAME_ROUTE_CLIENTE_LISTAGEM });
+const abrirAgendamento = () =>
+  router.push({ name: NAME_ROUTE_AGENDAMENTO_LISTAGEM });
 const deslogar = () => AuthService.deslogar();
 </script>

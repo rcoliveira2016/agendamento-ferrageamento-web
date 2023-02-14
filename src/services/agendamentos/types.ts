@@ -37,3 +37,15 @@ export interface IBuscaClienteViewModel {
   [TABLE_CLIENTE_COLUNA.nome]: string;
   [TABLE_CLIENTE_COLUNA.local]: string;
 }
+
+export interface IListagemAgendamentoParametros {
+  dataInicioSemana: Date;
+  dataFinalSemana: Date;
+}
+
+export interface IListagemAgendamentoViewModel {
+  id: number;
+  nomeCliente: string;
+  dataAgendamento: Date;
+  quantidade: number;
+}
