@@ -22,12 +22,12 @@ export interface ICadastroAgendamentoApiViewModel {
   [TABLE_CLIENTE]: {
     [TABLE_CLIENTE_COLUNA.nome]: string;
     [TABLE_CLIENTE_COLUNA.local]: string;
-  }[];
+  };
 }
 
 export interface ICadastroAgendamentoSalvarViewModel {
   id: number;
-  idCliente: string;
+  idCliente: number;
   observacoes: string;
   dataAgendamento: Date;
   quantidadeCavalo: number;
@@ -36,4 +36,19 @@ export interface ICadastroAgendamentoSalvarViewModel {
 export interface IBuscaClienteViewModel {
   [TABLE_CLIENTE_COLUNA.nome]: string;
   [TABLE_CLIENTE_COLUNA.local]: string;
+  dataAgendamento?: Date;
+}
+
+export interface IListagemAgendamentoParametros {
+  dataInicioSemana: Date;
+  dataFinalSemana: Date;
+}
+
+export interface IListagemAgendamentoViewModel {
+  marcado: boolean;
+  id: number;
+  idCliente: number;
+  nomeCliente: string;
+  dataAgendamento: Date;
+  quantidade: number;
 }

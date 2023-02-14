@@ -4,6 +4,7 @@ import {
   NAME_ROUTE_AGENDAMENTO_CADASTRO,
   NAME_ROUTE_CLIENTE_CADASTRO,
   NAME_ROUTE_CLIENTE_LISTAGEM,
+  NAME_ROUTE_AGENDAMENTO_LISTAGEM,
 } from "./constants";
 
 const router = createRouter({
@@ -40,6 +41,12 @@ const router = createRouter({
       component: () =>
         import("../views/agendamento/cadastro/ACadastroAgendamentoView.vue"),
     },
+    {
+      path: "/agendamento/listagem",
+      name: NAME_ROUTE_AGENDAMENTO_LISTAGEM,
+      component: () =>
+        import("../views/agendamento/listegem/AListagemAgendamentoView.vue"),
+    },
   ],
 });
 
@@ -48,7 +55,6 @@ router.beforeEach(async (to, from, next) => {
     next();
   } else {
     const user = await AuthService.usuarioLogado();
-    console.log(user);
     if (user) {
       next();
     } else {

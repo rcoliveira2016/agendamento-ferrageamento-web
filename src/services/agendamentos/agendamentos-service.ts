@@ -14,16 +14,24 @@ import type {
   ICadastroAgendamentoApiViewModel,
   ICadastroAgendamentoSalvarViewModel,
   ICadastroAgendamentoViewModel,
+  IListagemAgendamentoParametros,
+  IListagemAgendamentoViewModel,
 } from "./types";
 import {
   TABLE_AGENDAMENTO,
   TABLE_CLIENTE,
   TABLE_CLIENTE_COLUNA,
+  VIEW_CLIENTE_AGENADAMENTO,
+  VIEW_CLIENTE_AGENADAMENTO_COLUNA,
 } from "@/apis/supabase/store/constants/table";
 import {
   useGetCustom,
   useMontarSelectSubconsulta,
 } from "@/apis/supabase/store/read/selects-custom";
+import { useFunctionReadSelect } from "@/apis/supabase/store/read/function-read";
+import { date } from "quasar";
+import { FORMAT_DATE_STRING } from "@/apis/supabase/store/constants";
+import { useConvertDateSupabase } from "@/apis/supabase/store/ultis/convert-date";
 
 class AgendamentoServiceClass {
   private readonly nomaTabela = TABLE_AGENDAMENTO;
@@ -50,7 +58,7 @@ class AgendamentoServiceClass {
       await useGetCustom<ICadastroAgendamentoApiViewModel>(
         this.nomaTabela,
         idCliete,
-        `*\n${useMontarSelectSubconsulta(TABLE_CLIENTE, [
+        `*,\n${useMontarSelectSubconsulta(TABLE_CLIENTE, [
           TABLE_CLIENTE_COLUNA.nome,
           TABLE_CLIENTE_COLUNA.local,
         ])}`
@@ -58,8 +66,12 @@ class AgendamentoServiceClass {
 
     const dadoMapeado: ICadastroAgendamentoViewModel = {
       ...dado,
-      nomeCliente: dado.cliente[0].nome,
-      localCliente: dado.cliente[0].local,
+      nomeCliente: dado.cliente.nome,
+      localCliente: dado.cliente.local,
+      dataAgendamento: date.extractDate(
+        dado.dataAgendamento as any as string,
+        FORMAT_DATE_STRING
+      ),
     };
 
     return erro
@@ -72,14 +84,18 @@ class AgendamentoServiceClass {
     idCliete: number
   ): Promise<RetornoPadraoService<IBuscaClienteViewModel>> {
     const { dado, erro, mensagem } = await useGetCustom<IBuscaClienteViewModel>(
-      TABLE_CLIENTE,
+      VIEW_CLIENTE_AGENADAMENTO,
       idCliete,
-      `${TABLE_CLIENTE_COLUNA.nome},${TABLE_CLIENTE_COLUNA.local}`
+      `${VIEW_CLIENTE_AGENADAMENTO_COLUNA.nome},${VIEW_CLIENTE_AGENADAMENTO_COLUNA.local},${VIEW_CLIENTE_AGENADAMENTO_COLUNA.dataAgendamento}`
     );
 
+    const dadosTrado = {
+      ...dado,
+      dataAgendamento: useConvertDateSupabase(dado.dataAgendamento as any),
+    };
     return erro
       ? useRetornoPadraoServiceErro(dado, mensagem)
-      : useRetornoPadraoServiceSucesso(dado);
+      : useRetornoPadraoServiceSucesso(dadosTrado);
   }
 
   @loadingRequestService(400)
@@ -91,6 +107,34 @@ class AgendamentoServiceClass {
     return erro
       ? useRetornoPadraoServiceErro(dados, mensagem)
       : useRetornoPadraoServiceSucesso(dados);
+  }
+
+  @loadingBarRequestService(300)
+  public async listagem(
+    parametros: IListagemAgendamentoParametros
+  ): Promise<RetornoPadraoService<IListagemAgendamentoViewModel[]>> {
+    const { dado, erro, mensagem } =
+      await useFunctionReadSelect<IListagemAgendamentoViewModel>(
+        "agendamentos_listagem",
+        {
+          inicio: parametros.dataInicioSemana,
+          final: parametros.dataFinalSemana,
+        },
+        (x) => {
+          return {
+            marcado: !!x.marcado,
+            id: x.id,
+            nomeCliente: x.nomeCliente,
+            dataAgendamento:
+              useConvertDateSupabase(x.dataAgendamento) ?? new Date(),
+            quantidade: x.quantidadeCavalo,
+            idCliente: x.idCliente,
+          };
+        }
+      );
+    return erro
+      ? useRetornoPadraoServiceErro(dado, mensagem)
+      : useRetornoPadraoServiceSucesso(dado);
   }
 }
 
