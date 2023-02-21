@@ -1,6 +1,6 @@
 {
   "name": "agendamento-ferrageamento",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -16,6 +16,7 @@
     "@supabase/supabase-js": "^2.7.1",
     "@types/parse": "^3.0.2",
     "firebase": "^9.15.0",
+    "html-to-image": "^1.11.11",
     "parse": "^4.0.1",
     "pinia": "^2.0.28",
     "quasar": "^2.11.1",

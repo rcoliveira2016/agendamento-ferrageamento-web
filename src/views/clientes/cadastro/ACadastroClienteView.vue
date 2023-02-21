@@ -38,6 +38,19 @@
             />
           </div>
         </div>
+
+        <q-card v-if="!!dadosAuxiliares?.dataAgendamentoAtual" class="q-my-md">
+          <q-btn dense flat round icon="share" @click="compartilhar" />
+          <q-separator />
+          <q-card-section>
+            <strong>Data agendamento atual: </strong>
+            {{ dadosAuxiliares?.dataAgendamentoAtual?.toLocaleDateString() }}
+          </q-card-section>
+          <q-card-section>
+            <strong>Data agendamento proxima: </strong>
+            {{ dadosAuxiliares?.dataAgendamentoProxima?.toLocaleDateString() }}
+          </q-card-section>
+        </q-card>
       </q-form>
     </div>
     <ACadastroBasicoFloatingActionButton @salvar="salvarValidar" />
@@ -73,6 +86,9 @@ import { useCadastroClientesStore } from "@/stores/clientes/cadastro/cadastro-cl
 import { mapActions, mapState } from "pinia";
 import type { QForm } from "quasar";
 import { defineComponent, ref } from "vue";
+import { toPng } from "html-to-image";
+import { useNotifyError } from "@/core/notifications/notifications";
+
 export default defineComponent({
   name: "ACadastroClienteView",
   beforeRouteEnter(to) {
@@ -85,7 +101,11 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(useCadastroClientesStore, ["registro", "heNovo"]),
+    ...mapState(useCadastroClientesStore, [
+      "registro",
+      "heNovo",
+      "dadosAuxiliares",
+    ]),
   },
   methods: {
     ...mapActions(useCadastroClientesStore, ["salvar", "excluir"]),
@@ -114,6 +134,24 @@ export default defineComponent({
             id: this.registro.id,
           },
         });
+    },
+    async compartilhar() {
+      try {
+        const dataUrl = await toPng(document.getElementById("app")!);
+
+        const res: Response = await fetch(dataUrl);
+        const blob: Blob = await res.blob();
+        const file = new File([blob], "com partilhamebnto", {
+          type: "image/png",
+        });
+
+        navigator.share({
+          title: "agendamento",
+          files: [file],
+        });
+      } catch (error) {
+        useNotifyError("Erro inesperado ao tentar compartilhar");
+      }
     },
   },
   components: {
