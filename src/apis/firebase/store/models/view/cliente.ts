@@ -1,10 +1,8 @@
-export interface ICadastroClientesStoreState {
+export interface IClienteCadastroView {
   id: number;
   nome: string;
   local: string;
   frequencia: number;
-}
-export interface ICadastroClientesDadosAuxiliaresStoreState {
   dataAgendamentoAtual?: Date;
   dataAgendamentoProxima?: Date;
 }

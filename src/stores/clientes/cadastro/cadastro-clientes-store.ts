@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
-import type { ICadastroClientesStoreState } from "./types";
+import type {
+  ICadastroClientesDadosAuxiliaresStoreState,
+  ICadastroClientesStoreState,
+} from "./types";
 import { ClienteService } from "@/services/clientes/cliente-service";
 import { useValidarRetornoPadraoService } from "@/core/service/validar-retorno-padrao-service";
 const estadoCadastroEmpty = () => ({
@@ -10,6 +13,7 @@ const estadoCadastroEmpty = () => ({
     local: "",
     nome: "",
   } as ICadastroClientesStoreState,
+  dadosAuxiliares: {} as ICadastroClientesDadosAuxiliaresStoreState,
 });
 export const useCadastroClientesStore = defineStore("cadastroClientesStore", {
   state() {
@@ -36,7 +40,8 @@ export const useCadastroClientesStore = defineStore("cadastroClientesStore", {
       else if (id) {
         const response = await ClienteService.buscarCliente(parseInt(id));
         if (!useValidarRetornoPadraoService(response)) return;
-        this.registro = response.data;
+        this.registro = response.data.registro;
+        this.dadosAuxiliares = response.data.dadosAuxiliares;
       }
     },
   },

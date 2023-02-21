@@ -11,6 +11,21 @@ export interface IParametroListagemCliente {
 }
 
 export interface ICadastroClienteViewModel {
+  registro: ICadastroClienteRegistroViewModel;
+  dadosAuxiliares: {
+    dataAgendamentoAtual?: Date;
+    dataAgendamentoProxima?: Date;
+  };
+}
+
+export interface ICadastroClienteRegistroViewModel {
+  id: number;
+  nome: string;
+  local: string;
+  frequencia: number;
+}
+
+export interface ICadastroClienteInputModel {
   id: number;
   nome: string;
   local: string;

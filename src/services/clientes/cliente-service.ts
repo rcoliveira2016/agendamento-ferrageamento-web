@@ -1,5 +1,7 @@
 import { useQueryPaginada } from "@/apis/supabase/store/read/pagination-store";
 import type {
+  ICadastroClienteInputModel,
+  ICadastroClienteRegistroViewModel,
   ICadastroClienteViewModel,
   IListagemClienteViewModel,
   IParametroListagemCliente,
@@ -17,15 +19,11 @@ import {
   loadingRequestService,
 } from "@/core/service/loading-request";
 import {
-  TABLE_AGENDAMENTO,
   TABLE_CLIENTE,
-  TABLE_CLIENTE_COLUNA,
+  VIEW_CLIENTE_CADASTRO,
 } from "@/apis/supabase/store/constants/table";
-import {
-  useMontarSelectSubconsulta,
-  useSelectCustom,
-} from "@/apis/supabase/store/read/selects-custom";
 import { useConvertDateSupabase } from "@/apis/supabase/store/ultis/convert-date";
+import type { IClienteCadastroView } from "@/apis/firebase/store/models/view/cliente";
 
 class ClienteServiceClass {
   private readonly nomaTabela = TABLE_CLIENTE;
@@ -46,8 +44,8 @@ class ClienteServiceClass {
 
   @loadingRequestService(300)
   public async salvar(
-    dados: ICadastroClienteViewModel
-  ): Promise<RetornoPadraoService<ICadastroClienteViewModel>> {
+    dados: ICadastroClienteInputModel
+  ): Promise<RetornoPadraoService<ICadastroClienteRegistroViewModel>> {
     const { data, erro, mensagem } = await useUpdateOrInsert(
       this.nomaTabela,
       dados
@@ -61,20 +59,36 @@ class ClienteServiceClass {
   public async buscarCliente(
     id: number
   ): Promise<RetornoPadraoService<ICadastroClienteViewModel>> {
-    const { dado, erro, mensagem } = await useGet<ICadastroClienteViewModel>(
-      this.nomaTabela,
+    const { dado, erro, mensagem } = await useGet<IClienteCadastroView>(
+      VIEW_CLIENTE_CADASTRO,
       id
     );
 
-    return erro
-      ? useRetornoPadraoServiceErro(dado, mensagem)
-      : useRetornoPadraoServiceSucesso(dado);
+    const dados: ICadastroClienteViewModel = {
+      registro: {
+        frequencia: dado.frequencia,
+        id: dado.id,
+        local: dado.local,
+        nome: dado.nome,
+      },
+      dadosAuxiliares: {
+        dataAgendamentoAtual: useConvertDateSupabase(
+          dado.dataAgendamentoAtual as any
+        ),
+        dataAgendamentoProxima: useConvertDateSupabase(
+          dado.dataAgendamentoProxima as any
+        ),
+      },
+    };
+
+    if (erro) return useRetornoPadraoServiceErro(dados, mensagem);
+    return useRetornoPadraoServiceSucesso(dados);
   }
 
   @loadingRequestService(400)
   public async excluir(
-    dados: ICadastroClienteViewModel
-  ): Promise<RetornoPadraoService<ICadastroClienteViewModel>> {
+    dados: ICadastroClienteInputModel
+  ): Promise<RetornoPadraoService<ICadastroClienteRegistroViewModel>> {
     const { erro, mensagem } = await useDelete(this.nomaTabela, dados);
 
     return erro
