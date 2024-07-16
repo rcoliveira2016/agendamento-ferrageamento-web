@@ -45,6 +45,10 @@ export default {
   emits: ["excluir"],
   methods: {
     voltar() {
+      if (window.history.length == 2) {
+        this.$router.push("/");
+        return;
+      }
       this.$router.back();
     },
     excluir() {
