@@ -40,7 +40,14 @@
         </div>
 
         <q-card v-if="!!dadosAuxiliares?.dataAgendamentoAtual" class="q-my-md">
-          <q-btn dense flat round icon="share" @click="compartilhar" />
+          <q-btn
+            class="q-ma-sm"
+            dense
+            flat
+            round
+            icon="share"
+            @click="compartilhar"
+          />
           <q-separator />
           <q-card-section>
             <strong>Data agendamento atual: </strong>
@@ -86,8 +93,7 @@ import { useCadastroClientesStore } from "@/stores/clientes/cadastro/cadastro-cl
 import { mapActions, mapState } from "pinia";
 import type { QForm } from "quasar";
 import { defineComponent, ref } from "vue";
-import { toPng } from "html-to-image";
-import { useNotifyError } from "@/core/notifications/notifications";
+import { useCompartilharTela } from "@/core/shered/shered-tela";
 
 export default defineComponent({
   name: "ACadastroClienteView",
@@ -136,22 +142,7 @@ export default defineComponent({
         });
     },
     async compartilhar() {
-      try {
-        const dataUrl = await toPng(document.getElementById("app")!);
-
-        const res: Response = await fetch(dataUrl);
-        const blob: Blob = await res.blob();
-        const file = new File([blob], "com partilhamebnto", {
-          type: "image/png",
-        });
-
-        navigator.share({
-          title: "agendamento",
-          files: [file],
-        });
-      } catch (error) {
-        useNotifyError("Erro inesperado ao tentar compartilhar");
-      }
+      useCompartilharTela();
     },
   },
   components: {

@@ -16,6 +16,7 @@
           </q-card-section>
           <q-card-actions class="q-px-md">
             <q-btn
+              :loading="estaAutenticando"
               @click="logar"
               unelevated
               size="lg"
@@ -37,7 +38,7 @@ import { useLoginStore } from "@/stores/autenticacao/login/login-store";
 export default defineComponent({
   name: "ALoginView",
   computed: {
-    ...mapWritableState(useLoginStore, ["email", "senha"]),
+    ...mapWritableState(useLoginStore, ["email", "senha","estaAutenticando"]),
   },
   methods: {
     ...mapActions(useLoginStore, ["logar"]),

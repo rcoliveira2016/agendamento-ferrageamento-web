@@ -2,7 +2,6 @@ import type {
   IUsuarioLogadoAuthService,
   ILoginRetornoAuthService,
 } from "./types";
-import { FirebaseError } from "firebase/app";
 import router from "@/router";
 import {
   useUsuarioAtivoSessao,
@@ -23,36 +22,18 @@ class AuthServiceClass {
   async logar(email: string, senha: string): Promise<ILoginRetornoAuthService> {
     try {
       const resposta = await useLoginPorEmailSenha(email, senha);
-      console.log(resposta);
-      if (!resposta.erro) return { sucesso: true };
+      if (resposta.logadoComSucesso) return { sucesso: true };
+
       return {
-        sucesso: false,
-        mensagem: "usuário não encontrado inválida",
+        sucesso: !resposta.erro,
+        mensagem: resposta.erro ? resposta.mensagem[0] : undefined,
       };
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        console.log(error.code);
-        if (error.code === "auth/invalid-email") {
-          return {
-            sucesso: false,
-            mensagem: "email inválido",
-          };
-        }
-        if (error.code === "auth/invalid-password") {
-          return {
-            sucesso: false,
-            mensagem: "senha inválida",
-          };
-        }
-        if (error.code === "auth/user-not-found") {
-          return {
-            sucesso: false,
-            mensagem: "usuário não encontrado inválida",
-          };
-        }
-      }
+      return {
+        sucesso: false,
+        mensagem: "erro inesperado",
+      };
     }
-    return { sucesso: true };
   }
 
   async deslogar() {

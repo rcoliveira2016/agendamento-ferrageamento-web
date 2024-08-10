@@ -8,10 +8,12 @@ export const useLoginStore = defineStore("loginStore", {
     return {
       email: "",
       senha: "",
+      estaAutenticando: false,
     };
   },
   actions: {
     async logar() {
+      this.estaAutenticando = true;
       const retorno = await AuthService.logar(this.email, this.senha);
       console.log(retorno);
       if (retorno.sucesso) {
@@ -19,6 +21,7 @@ export const useLoginStore = defineStore("loginStore", {
       } else if (retorno.mensagem) {
         useNotifyError(retorno.mensagem);
       }
+      this.estaAutenticando = false;
     },
   },
 });

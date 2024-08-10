@@ -5,6 +5,9 @@
     @excluir="excluir"
     :mostrar-excluir="!heNovo"
   >
+    <template #botoes-direita>
+      <q-btn dense flat round icon="share" @click="compartilhar" />
+    </template>
     <div class="fit">
       <q-form ref="form" class="tamanho-maximo-container-pagina margin-auto">
         <div class="row">
@@ -72,6 +75,7 @@ import ACadastroBasicoFloatingActionButton from "@/components/cadastros/floating
 import AInputForm from "@/components/forms/campos/AInputForm.vue";
 import AInputDataPicker from "@/components/forms/campos/date/AInputDataPicker.vue";
 import ALayoutPadraoCadastro from "@/components/layout/padrao/ALayoutPadraoCadastro.vue";
+import { useCompartilharTela } from "@/core/shered/shered-tela";
 import { NAME_ROUTE_AGENDAMENTO_CADASTRO } from "@/router/constants";
 import { useCadastroAgendamentoStore } from "@/stores/agendamento/cadastro/cadastro-agendamento-store";
 import { mapActions, mapState } from "pinia";
@@ -102,6 +106,9 @@ export default defineComponent({
           params: { id: this.registro.id },
         });
       }
+    },
+    async compartilhar() {
+      useCompartilharTela();
     },
   },
   components: {
