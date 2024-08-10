@@ -93,7 +93,7 @@ import { useCadastroClientesStore } from "@/stores/clientes/cadastro/cadastro-cl
 import { mapActions, mapState } from "pinia";
 import type { QForm } from "quasar";
 import { defineComponent, ref } from "vue";
-import { useCompartilharTela } from "@/core/shered/shered-tela";
+import { useCampartilharAgendamento } from "@/helper/shered/campartilhar-agendamento";
 
 export default defineComponent({
   name: "ACadastroClienteView",
@@ -141,8 +141,15 @@ export default defineComponent({
           },
         });
     },
-    async compartilhar() {
-      useCompartilharTela();
+    compartilhar() {
+      if (!this.dadosAuxiliares) return;
+      if (!this.dadosAuxiliares?.dataAgendamentoProxima) return;
+
+      useCampartilharAgendamento({
+        DataProxima: this.dadosAuxiliares.dataAgendamentoProxima,
+        DataUltimo: this.dadosAuxiliares.dataAgendamentoAtual,
+        Observacoes: "",
+      });
     },
   },
   components: {

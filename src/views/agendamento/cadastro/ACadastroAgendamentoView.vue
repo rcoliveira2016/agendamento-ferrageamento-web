@@ -75,7 +75,7 @@ import ACadastroBasicoFloatingActionButton from "@/components/cadastros/floating
 import AInputForm from "@/components/forms/campos/AInputForm.vue";
 import AInputDataPicker from "@/components/forms/campos/date/AInputDataPicker.vue";
 import ALayoutPadraoCadastro from "@/components/layout/padrao/ALayoutPadraoCadastro.vue";
-import { useCompartilharTela } from "@/core/shered/shered-tela";
+import { useCampartilharAgendamento } from "@/helper/shered/campartilhar-agendamento";
 import { NAME_ROUTE_AGENDAMENTO_CADASTRO } from "@/router/constants";
 import { useCadastroAgendamentoStore } from "@/stores/agendamento/cadastro/cadastro-agendamento-store";
 import { mapActions, mapState } from "pinia";
@@ -108,7 +108,10 @@ export default defineComponent({
       }
     },
     async compartilhar() {
-      useCompartilharTela();
+      useCampartilharAgendamento({
+        DataProxima: this.registro.dataAgendamento,
+        Observacoes: this.registro.observacoes,
+      });
     },
   },
   components: {
