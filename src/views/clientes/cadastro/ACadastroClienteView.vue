@@ -2,7 +2,7 @@
   <ALayoutPadraoCadastro
     titulo="Cliente"
     @salvar="salvarValidar"
-    @excluir="excluir"
+    @excluir="confirmarExclusao"
     :mostrar-excluir="!heNovo"
   >
     <div class="fit">
@@ -94,6 +94,7 @@ import { mapActions, mapState } from "pinia";
 import type { QForm } from "quasar";
 import { defineComponent, ref } from "vue";
 import { useCampartilharAgendamento } from "@/helper/shered/campartilhar-agendamento";
+import { useConfirmDialog } from "@/core/dialog/confirmar-dialog";
 
 export default defineComponent({
   name: "ACadastroClienteView",
@@ -148,8 +149,17 @@ export default defineComponent({
       useCampartilharAgendamento({
         DataProxima: this.dadosAuxiliares.dataAgendamentoProxima,
         DataUltimo: this.dadosAuxiliares.dataAgendamentoAtual,
-        Observacoes: "",
+        Observacoes: this.dadosAuxiliares.observacoes,
       });
+    },
+    async confirmarExclusao() {
+      const confirmou = await useConfirmDialog({
+        cancelLabel: "Cancelar",
+        okLabel: "Confirmar",
+        message: "Tem certeza que deseja excluir o cliente?",
+      });
+
+      confirmou && this.excluir();
     },
   },
   components: {

@@ -26,6 +26,7 @@ export const useCadastroClientesStore = defineStore("cadastroClientesStore", {
 
       this.heNovo = estadoCadastroEmpty().heNovo;
       this.registro = estadoCadastroEmpty().registro;
+      this.dadosAuxiliares = estadoCadastroEmpty().dadosAuxiliares;
     },
     async salvar() {
       const response = await ClienteService.salvar(this.registro);

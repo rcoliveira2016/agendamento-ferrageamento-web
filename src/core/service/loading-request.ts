@@ -1,6 +1,8 @@
 import { Loading, LoadingBar, QSpinnerGears } from "quasar";
 LoadingBar.setDefaults({
-  size: "0.3rem",
+  size: "0.4rem",
+  color: "deep-purple-5",
+  indeterminate: true,
 });
 
 export const useLoadingRequestService = <T = undefined>(

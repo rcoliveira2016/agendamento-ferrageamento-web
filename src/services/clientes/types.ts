@@ -15,6 +15,7 @@ export interface ICadastroClienteViewModel {
   dadosAuxiliares: {
     dataAgendamentoAtual?: Date;
     dataAgendamentoProxima?: Date;
+    observacoes?: string;
   };
 }
 

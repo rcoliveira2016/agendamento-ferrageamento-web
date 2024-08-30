@@ -1,9 +1,11 @@
 <template>
-  <div class="row" style="">
-    <div class="col">
+  <div class="row">
+    <div class="col q-mb-lg">
       <AInputForm
         v-model="estadoListagem.filtros"
         icon-left="search"
+        standout
+        filled
         @update:model-value="pesquisaTexto"
         :debounce="600"
       />

@@ -18,7 +18,6 @@ import type {
   IListagemAgendamentoViewModel,
 } from "./types";
 import {
-  TABLE_AGENADAMENTO_COLUNA,
   TABLE_AGENDAMENTO,
   TABLE_CLIENTE,
   TABLE_CLIENTE_COLUNA,
@@ -28,7 +27,6 @@ import {
 import {
   useGetCustom,
   useMontarSelectSubconsulta,
-  useSelectCustom,
 } from "@/apis/supabase/store/read/selects-custom";
 import { useFunctionReadSelect } from "@/apis/supabase/store/read/function-read";
 import { date } from "quasar";

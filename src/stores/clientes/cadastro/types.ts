@@ -7,4 +7,5 @@ export interface ICadastroClientesStoreState {
 export interface ICadastroClientesDadosAuxiliaresStoreState {
   dataAgendamentoAtual?: Date;
   dataAgendamentoProxima?: Date;
+  observacoes?: string;
 }

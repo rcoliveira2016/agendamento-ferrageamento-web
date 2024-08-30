@@ -6,7 +6,7 @@ export const useFunctionReadSelect = async <T = Record<string, any>>(
   parametros: any,
   map: (data: any) => T
 ): Promise<IRetornoGet<T[]>> => {
-  console.log(name, parametros);
+  
   const { data, error } = await supabase.rpc(name, parametros);
   if (error)
     return {

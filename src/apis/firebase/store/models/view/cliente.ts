@@ -5,4 +5,5 @@ export interface IClienteCadastroView {
   frequencia: number;
   dataAgendamentoAtual?: Date;
   dataAgendamentoProxima?: Date;
+  observacoes?: string;
 }

@@ -17,3 +17,4 @@ export const VIEW_CLIENTE_AGENADAMENTO_COLUNA = Object.freeze({
   local: "local",
   dataAgendamento: "dataAgendamento",
 });
+export const FUNCTION_EXCLUIR_CLIENTE = "excluir_cliente";

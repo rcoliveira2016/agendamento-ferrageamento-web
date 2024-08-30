@@ -13,17 +13,18 @@ import {
 } from "@/core/service/types/retorno-padrao-service";
 import { useUpdateOrInsert } from "@/apis/supabase/store/write/write-store";
 import { useGet } from "@/apis/supabase/store/read/selects";
-import { useDelete } from "@/apis/supabase/store/write/delete-store";
 import {
   loadingBarRequestService,
   loadingRequestService,
 } from "@/core/service/loading-request";
 import {
+  FUNCTION_EXCLUIR_CLIENTE,
   TABLE_CLIENTE,
   VIEW_CLIENTE_CADASTRO,
 } from "@/apis/supabase/store/constants/table";
 import { useConvertDateSupabase } from "@/apis/supabase/store/ultis/convert-date";
 import type { IClienteCadastroView } from "@/apis/firebase/store/models/view/cliente";
+import { useFunctionWrite } from "@/apis/supabase/store/write/function-write";
 
 class ClienteServiceClass {
   private readonly nomaTabela = TABLE_CLIENTE;
@@ -78,6 +79,7 @@ class ClienteServiceClass {
         dataAgendamentoProxima: useConvertDateSupabase(
           dado.dataAgendamentoProxima as any
         ),
+        observacoes: dado.observacoes,
       },
     };
 
@@ -89,7 +91,10 @@ class ClienteServiceClass {
   public async excluir(
     dados: ICadastroClienteInputModel
   ): Promise<RetornoPadraoService<ICadastroClienteRegistroViewModel>> {
-    const { erro, mensagem } = await useDelete(this.nomaTabela, dados);
+    const { erro, mensagem } = await useFunctionWrite(
+      FUNCTION_EXCLUIR_CLIENTE,
+      { p_cliente_id: dados.id }
+    );
 
     return erro
       ? useRetornoPadraoServiceErro(dados, mensagem)
